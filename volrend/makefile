@@ -7,13 +7,23 @@ APPS      = ./apps
 
 TARGET_S  = $(APP_DIR)/sequential
 
-FLAGS     = -O3 -Wall
+FLAGS     = -O3 -Wall -std=c++0x -ltiff
 
 all: libed apps
 
 libed:                     \
 	build                  \
-	$(OBJ_DIR)/util.o
+	$(OBJ_DIR)/util.o      \
+	$(OBJ_DIR)/option.o    \
+	$(OBJ_DIR)/normal.o    \
+	$(OBJ_DIR)/opacity.o   \
+	$(OBJ_DIR)/octree.o    \
+	$(OBJ_DIR)/file.o      \
+	$(OBJ_DIR)/map.o       \
+	$(OBJ_DIR)/view.o      \
+	$(OBJ_DIR)/render.o    \
+	$(OBJ_DIR)/adaptive.o  \
+	$(OBJ_DIR)/raytrace.o
 
 apps:                      \
 	$(TARGET_S)
@@ -22,7 +32,7 @@ build:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(APP_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC)/%.cpp $(INCLUDE)/%.h
+$(OBJ_DIR)/%.o: $(SRC)/%.cpp 
 	g++ -c $< -I $(INCLUDE) $(FLAGS) -o $@
 
 $(APP_DIR)/%: $(APPS)/%.cpp
